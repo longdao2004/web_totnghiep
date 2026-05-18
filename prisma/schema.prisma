@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Brand {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  country   String?
+  logoUrl   String?
+  models    CarModel[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("brands")
+}
+
+model CarModel {
+  id             String             @id @default(cuid())
+  brandId        String
+  name           String
+  segment        String?
+  bodyType       String?
+  imageUrl       String?
+  startingPrice  Decimal?           @db.Decimal(14, 2)
+  brand          Brand              @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  specifications CarSpecification[]
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@unique([brandId, name])
+  @@index([brandId])
+  @@map("car_models")
+}
+
+model CarSpecification {
+  id                 String   @id @default(cuid())
+  carModelId         String
+  versionName        String
+  modelYear          Int?
+  price              Decimal? @db.Decimal(14, 2)
+  engine             String?
+  power              String?
+  torque             String?
+  transmission       String?
+  drivetrain         String?
+  fuelType           String?
+  fuelConsumption    Float?
+  seatingCapacity    Int?
+  dimensions         String?
+  groundClearance    Int?
+  safetyFeatures     String?
+  technologyFeatures String?
+  carModel           CarModel @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@unique([carModelId, versionName])
+  @@index([carModelId])
+  @@map("car_specifications")
+}
