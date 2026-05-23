@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { connection } from "next/server";
+import CarCard from "@/components/CarCard";
 import prisma from "@/lib/prisma";
 
 async function getCars() {
@@ -9,13 +8,11 @@ async function getCars() {
       brand: {
         select: {
           name: true,
-          logoUrl: true,
         },
       },
       specifications: {
         select: {
           price: true,
-          engine: true,
         },
         orderBy: {
           price: "asc",
@@ -28,14 +25,42 @@ async function getCars() {
   });
 }
 
-function formatVnd(price: { toNumber: () => number } | null | undefined) {
-  if (!price) return "Liên hệ";
+function CarIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-8 w-8 text-cyan-400"
+      fill="none"
+    >
+      <path
+        d="M5 14h14M7 18h.01M17 18h.01M6.5 10l1.7-4h7.6l1.7 4M5 14v4m14-4v4M4 10h16v5H4v-5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-    maximumFractionDigits: 0,
-  }).format(price.toNumber());
+function AiIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-8 w-8 text-cyan-400"
+      fill="none"
+    >
+      <path
+        d="M9 18h6M10 21h4M8 14.5a6 6 0 1 1 8 0c-.8.7-1 1.4-1 2.5H9c0-1.1-.2-1.8-1-2.5ZM12 8v4M9.8 10h4.4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 export default async function HomePage() {
@@ -44,125 +69,106 @@ export default async function HomePage() {
   const cars = await getCars();
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-950">
-      <section className="bg-slate-950 px-6 py-20 text-white">
-        <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300">
-            Car AI Project
-          </p>
-          <h1 className="max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
-            Khám phá các dòng xe nổi bật
-          </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
-            Cập nhật thông tin hãng xe, phân khúc, động cơ và giá bán để hỗ trợ
-            quá trình so sánh, lựa chọn ô tô phù hợp.
-          </p>
+    <div className="min-h-screen bg-[#0B0C10] text-white">
+      <section className="px-6 py-12 md:py-14">
+        <div className="mx-auto max-w-7xl">
+          <div
+            className="relative min-h-[420px] overflow-hidden rounded-3xl border border-cyan-400/20 bg-cover bg-center shadow-[0_30px_120px_rgba(0,0,0,0.55)] md:min-h-[610px]"
+            style={{ backgroundImage: "url('/hero-car-neon.jpg')" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-black/25" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10]/90 via-transparent to-transparent" />
+
+            <div className="relative flex min-h-[420px] max-w-4xl flex-col justify-end px-7 pb-12 md:min-h-[610px] md:px-14 md:pb-16">
+              <p className="mb-6 text-xs font-bold uppercase tracking-[0.32em] text-cyan-400">
+                TRÍ TUỆ THẾ HỆ MỚI
+              </p>
+              <h1 className="max-w-4xl text-4xl font-black leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
+                Tương lai của hiệu suất
+                <span className="block text-cyan-400">
+                  Được dẫn dắt bởi AI
+                </span>
+              </h1>
+            </div>
+          </div>
+
+          <div className="mt-7 grid gap-6 lg:grid-cols-2">
+            <article className="rounded-2xl border border-white/10 bg-white/[0.04] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition hover:border-cyan-400/40">
+              <CarIcon />
+              <div className="mt-20">
+                <h2 className="text-xl font-bold text-white">
+                  Phân tích mẫu xe
+                </h2>
+                <p className="mt-3 max-w-sm text-sm leading-6 text-slate-400">
+                  Giải mã hiệu suất và cung cấp công cụ so sánh theo thời gian
+                  thực cho quá trình tìm hiểu xe thông minh hơn.
+                </p>
+              </div>
+            </article>
+
+            <article className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition hover:border-cyan-400/40">
+              <span className="absolute right-8 top-8 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-[10px] font-bold tracking-widest text-cyan-300">
+                BETA
+              </span>
+              <AiIcon />
+              <div className="mt-20">
+                <h2 className="text-xl font-bold text-white">
+                  Công cụ gợi ý bằng AI
+                </h2>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
+                  Để hệ thống AI tìm mẫu xe phù hợp nhất dựa trên lối sống, nhu
+                  cầu vận hành, ngân sách và mục tiêu sử dụng của bạn.
+                </p>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-sm font-medium text-cyan-700">
-              {cars.length} mẫu xe
-            </p>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-950">
-              Danh sách xe ô tô
-            </h2>
-          </div>
+      <section className="mx-auto max-w-7xl px-6 pb-20 pt-8">
+        <div className="mb-8">
+          <p className="text-sm font-bold uppercase tracking-[0.28em] text-cyan-400">
+            {cars.length} mẫu xe
+          </p>
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-white md:text-4xl">
+            Khám phá các dòng xe
+          </h2>
         </div>
 
         {cars.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-            <h3 className="text-lg font-semibold text-slate-900">
+          <div className="rounded-2xl border border-dashed border-cyan-400/30 bg-white/[0.04] px-6 py-14 text-center">
+            <h3 className="text-lg font-semibold text-white">
               Chưa có xe nào trong hệ thống
             </h3>
-            <p className="mt-2 text-sm text-slate-600">
+            <p className="mt-2 text-sm text-slate-400">
               Hãy thêm dữ liệu vào bảng CarModel, Brand và CarSpecification để
               hiển thị danh sách xe tại đây.
             </p>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {cars.map((car) => {
-              const baseSpecification = car.specifications[0];
-              const startingPrice = car.startingPrice ?? baseSpecification?.price;
+              const startingPrice =
+                car.startingPrice ?? car.specifications[0]?.price ?? null;
 
               return (
-                <article
+                <CarCard
                   key={car.id}
-                  className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                >
-                  {car.imageUrl ? (
-                    <img
-                      src={car.imageUrl}
-                      alt={`${car.brand.name} ${car.name}`}
-                      className="h-48 w-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-48 w-full items-center justify-center bg-slate-200 text-sm font-medium text-slate-500">
-                      Chưa có hình ảnh
-                    </div>
-                  )}
-
-                  <div className="space-y-5 p-5">
-                    <div className="flex items-center gap-3">
-                      {car.brand.logoUrl ? (
-                        <img
-                          src={car.brand.logoUrl}
-                          alt={car.brand.name}
-                          className="h-9 w-9 rounded-full border border-slate-200 object-contain p-1"
-                        />
-                      ) : (
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500">
-                          {car.brand.name.charAt(0)}
-                        </div>
-                      )}
-
-                      <div>
-                        <p className="text-sm font-medium text-slate-500">
-                          {car.brand.name}
-                        </p>
-                        <h3 className="text-xl font-bold text-slate-950">
-                          {car.name}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <div className="grid gap-3 text-sm text-slate-600">
-                      <div className="flex items-center justify-between gap-4">
-                        <span>Phân khúc</span>
-                        <span className="font-semibold text-slate-900">
-                          {car.segment ?? "Đang cập nhật"}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between gap-4">
-                        <span>Động cơ</span>
-                        <span className="text-right font-semibold text-slate-900">
-                          {baseSpecification?.engine ?? "Đang cập nhật"}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between gap-4">
-                        <span>Giá từ</span>
-                        <span className="text-right font-bold text-cyan-700">
-                          {formatVnd(startingPrice)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <a
-                      href={`/xe/${car.id}`}
-                      className="block rounded-md bg-slate-950 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-cyan-700"
-                    >
-                      Xem chi tiết
-                    </a>
-                  </div>
-                </article>
+                  car={{
+                    id: car.id,
+                    name: car.name,
+                    imageUrl: car.imageUrl,
+                    startingPrice,
+                    brand: {
+                      name: car.brand.name,
+                    },
+                  }}
+                />
               );
             })}
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 }
