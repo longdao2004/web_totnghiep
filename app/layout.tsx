@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,13 +21,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="h-full antialiased">
+    <html lang="vi" className="h-full antialiased" suppressHydrationWarning>
       <body
-        className={`${inter.className} min-h-screen flex flex-col bg-[#0B0C10] text-white`}
+        className={`${inter.className} min-h-screen flex flex-col bg-white text-black dark:bg-[#0B0C10] dark:text-white`}
       >
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
