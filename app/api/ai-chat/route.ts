@@ -1,15 +1,23 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
+const ollamaModel = process.env.OLLAMA_MODEL?.trim() || "qwen2.5:3b";
 
-const systemInstruction =
-  "Ban la mot chuyen gia tu van xe o to nhiet tinh va giau kinh nghiem tai Viet Nam. Nhiem vu cua ban la tu van cho nguoi dung chon mua xe phu hop voi nhu cau, ngan sach va so thich. Hay tra loi ngan gon, than thien, de hieu va dung markdown de format noi dung. Neu nguoi hoi ve gia xe hoac thong so, hay uu tien cac thong tin pho bien tai thi truong Viet Nam.";
-const geminiModel = process.env.GEMINI_MODEL?.trim() || "gemini-2.0-flash";
+const systemInstruction = `
+Bạn là chuyên gia tư vấn ô tô tại Việt Nam. Nhiệm vụ của bạn là tư vấn xe chính xác, ngắn gọn, thực tế và dễ hiểu dựa trên dữ liệu được cung cấp.
+
+QUY TẮC BẮT BUỘC:
+1. Chỉ được tư vấn dựa trên danh sách xe trong phần "Dữ liệu xe". Không được tự ý nêu, gợi ý hoặc bịa thông tin về mẫu xe không có trong danh sách đó.
+2. Khi khách hàng hỏi theo phân khúc/kiểu dáng như Sedan, SUV, Crossover, Hatchback, MPV, Pickup..., bạn phải tự lọc từ trường "Phân khúc" trong "Dữ liệu xe".
+3. Không được gọi sai phân khúc. Nếu dữ liệu ghi "Phân khúc: SUV" thì chỉ xem xe đó là SUV; nếu ghi "Sedan" thì chỉ xem là Sedan.
+4. Nếu không tìm thấy xe phù hợp với phân khúc, ngân sách hoặc nhu cầu trong "Dữ liệu xe", hãy nói lịch sự rằng hiện chưa tìm thấy mẫu xe phù hợp trong cơ sở dữ liệu, không được tự bịa mẫu xe khác.
+5. Nếu dữ liệu thiếu thông tin, hãy nói rõ là dữ liệu chưa cập nhật thay vì suy đoán.
+6. Khi trả lời, ưu tiên nêu tên xe, thương hiệu, phân khúc và giá. Có thể dùng markdown để trình bày gọn gàng.
+`.trim();
 
 type ChatMessage = {
-  role: "user" | "model";
+  role: "user" | "model" | "assistant" | "system";
   content: string;
 };
 
@@ -34,7 +42,7 @@ type CarWithContext = Prisma.CarModelGetPayload<{
 
 function formatPrice(price: unknown) {
   if (!price) {
-    return "Chua co gia";
+    return "Chưa có giá";
   }
 
   const value = Number(price);
@@ -52,23 +60,25 @@ function formatPrice(price: unknown) {
 
 function buildCarContext(cars: CarWithContext[]) {
   if (cars.length === 0) {
-    return "Hien database chua co du lieu xe.";
+    return "Hiện database chưa có dữ liệu xe.";
   }
 
   return cars
     .map((car, index) => {
       const specification = car.specifications[0];
+      const carSegment = car.bodyType?.trim() || car.segment?.trim() || "Đang cập nhật";
 
       return [
         `${index + 1}. ${car.brand.name} ${car.name}`,
-        `Gia tu: ${formatPrice(car.startingPrice)}`,
-        specification?.engine ? `Dong co: ${specification.engine}` : null,
+        `Phân khúc: ${carSegment}`,
+        `Giá: ${formatPrice(car.startingPrice)}`,
+        specification?.engine ? `Động cơ: ${specification.engine}` : null,
         specification?.seatingCapacity
-          ? `So cho: ${specification.seatingCapacity}`
+          ? `Số chỗ: ${specification.seatingCapacity}`
           : null,
-        specification?.fuelType ? `Nhien lieu: ${specification.fuelType}` : null,
+        specification?.fuelType ? `Nhiên liệu: ${specification.fuelType}` : null,
         specification?.transmission
-          ? `Hop so: ${specification.transmission}`
+          ? `Hộp số: ${specification.transmission}`
           : null,
       ]
         .filter(Boolean)
@@ -79,15 +89,6 @@ function buildCarContext(cars: CarWithContext[]) {
 
 export async function POST(req: Request) {
   try {
-    const apiKey = process.env.GEMINI_API_KEY?.trim();
-
-    if (!apiKey) {
-      return NextResponse.json(
-        { error: "Thieu GEMINI_API_KEY trong file .env." },
-        { status: 500 },
-      );
-    }
-
     const body = await req.json();
     const messages: ChatMessage[] = Array.isArray(body.messages)
       ? body.messages
@@ -95,32 +96,12 @@ export async function POST(req: Request) {
 
     if (messages.length === 0) {
       return NextResponse.json(
-        { error: "Messages phai co it nhat mot tin nhan." },
+        { error: "Tin nhắn không được để trống" },
         { status: 400 },
       );
     }
-
-    const lastMessage = messages[messages.length - 1]?.content?.trim();
-
-    if (!lastMessage) {
-      return NextResponse.json(
-        { error: "Tin nhan moi nhat dang rong." },
-        { status: 400 },
-      );
-    }
-
-    const previousMessages = messages
-      .slice(0, -1)
-      .filter((msg, index) => !(index === 0 && msg.role === "model"))
-      .filter((msg) => Boolean(msg.content?.trim()));
-
-    const formattedHistory = previousMessages.map((msg) => ({
-      role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: msg.content }],
-    }));
 
     const cars = await prisma.carModel.findMany({
-      take: 5,
       orderBy: {
         startingPrice: "asc",
       },
@@ -143,38 +124,50 @@ export async function POST(req: Request) {
     });
 
     const carContext = buildCarContext(cars);
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: geminiModel,
-      systemInstruction: `${systemInstruction}\n\nDu lieu xe hien co trong he thong:\n${carContext}`,
+    const formattedMessages = messages
+      .filter((msg) => Boolean(msg.content?.trim()))
+      .map((msg) => ({
+        role: msg.role === "user" ? "user" : "assistant",
+        content: msg.content,
+      }));
+
+    const ollamaMessages = [
+      {
+        role: "system",
+        content: `${systemInstruction}\n\nDữ liệu xe:\n${carContext}`,
+      },
+      ...formattedMessages,
+    ];
+
+    const response = await fetch("http://localhost:11434/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: ollamaModel,
+        messages: ollamaMessages,
+        stream: false,
+      }),
     });
 
-    const chat = model.startChat({ history: formattedHistory });
-    const result = await chat.sendMessage(lastMessage);
+    if (!response.ok) {
+      throw new Error(
+        "Ollama không phản hồi. Hãy chắc chắn phần mềm Ollama đang mở.",
+      );
+    }
 
-    return NextResponse.json({ text: result.response.text() });
+    const data = await response.json();
+
+    return NextResponse.json({ text: data.message.content });
   } catch (error) {
-    console.error("Backend Error:", error);
-
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : "Khong the xu ly yeu cau chat luc nay.";
-    const isQuotaError =
-      errorMessage.includes("429") ||
-      errorMessage.toLowerCase().includes("quota") ||
-      errorMessage.toLowerCase().includes("too many requests");
-    const isDevelopment = process.env.NODE_ENV === "development";
+    console.error("Lỗi backend Local AI:", error);
 
     return NextResponse.json(
-      {
-        error: isQuotaError
-          ? "Gemini API dang het quota hoac bi gioi han toc do. Vui long doi mot lat, doi API key, hoac bat billing cho project Google AI."
-          : isDevelopment
-          ? `Loi backend: ${errorMessage}`
-          : "Khong the xu ly yeu cau chat luc nay.",
-      },
-      { status: isQuotaError ? 429 : 500 },
+      { error: "Lỗi kết nối Local AI. Vui lòng kiểm tra Ollama." },
+      { status: 500 },
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
