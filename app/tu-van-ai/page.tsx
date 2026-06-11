@@ -8,18 +8,9 @@ import {
   useState,
 } from "react";
 import {
-  BarChart3,
-  Bell,
   Bot,
-  Car,
-  Gauge,
-  History,
-  LogOut,
-  MessageSquareText,
   Mic,
-  Paperclip,
   SendHorizontal,
-  Settings,
   UserRound,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -27,37 +18,33 @@ import ReactMarkdown from "react-markdown";
 type ChatMessage = {
   role: "user" | "model";
   content: string;
+  timestamp: string;
 };
 
 const initialMessages: ChatMessage[] = [
   {
     role: "model",
     content:
-      "Xin chào! Tôi là Trợ lý AI của Car AI. Hãy cho tôi biết ngân sách, nhu cầu sử dụng hoặc mẫu xe bạn đang quan tâm để tôi tư vấn chiếc xe phù hợp nhất.",
+      "Xin chào! Tôi là Trợ lý AI của Car AI. Hãy cho tôi biết nhu cầu của bạn để tôi tư vấn chiếc xe phù hợp nhất.",
+    timestamp: new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
   },
 ];
 
 const quickPrompts = [
   "SUV dưới 1 tỷ",
-  "Xe gia đình 7 chỗ",
+  "Toyota Veloz Cross Top",
   "Sedan tiết kiệm xăng",
   "Xe điện đáng mua",
-  "Xe cho người mới lái",
 ];
 
-const sidebarItems = [
-  { icon: MessageSquareText, label: "Tư vấn", active: true },
-  { icon: Gauge, label: "Hiệu năng" },
-  { icon: BarChart3, label: "Phân tích" },
-  { icon: History, label: "Lịch sử" },
-];
-
-function CarMark() {
-  return (
-    <span className="flex h-10 w-10 items-center justify-center border border-white/10 bg-white text-cyan-500 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
-      <Car className="h-5 w-5" aria-hidden="true" />
-    </span>
-  );
+function formatTime(date: Date) {
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 function Avatar({ type }: { type: "bot" | "user" }) {
@@ -65,10 +52,10 @@ function Avatar({ type }: { type: "bot" | "user" }) {
 
   return (
     <div
-      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border ${
+      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border ${
         isBot
-          ? "border-cyan-300/70 bg-cyan-400/10 text-cyan-200 shadow-[0_0_0_4px_rgba(56,189,248,0.08)]"
-          : "border-cyan-200/70 bg-slate-950 text-cyan-100 shadow-[0_0_0_4px_rgba(56,189,248,0.08)]"
+          ? "border-cyan-500/30 bg-cyan-500/10 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+          : "border-slate-600 bg-slate-800 text-slate-300 shadow-md"
       }`}
     >
       {isBot ? (
@@ -93,15 +80,14 @@ export default function TuVanAiPage() {
   async function sendMessage(messageText?: string) {
     const trimmedInput = (messageText ?? input).trim();
 
-    if (!trimmedInput || isLoading) {
-      return;
-    }
+    if (!trimmedInput || isLoading) return;
 
     const newMessages: ChatMessage[] = [
       ...messages,
       {
         role: "user",
         content: trimmedInput,
+        timestamp: formatTime(new Date()),
       },
     ];
 
@@ -112,50 +98,32 @@ export default function TuVanAiPage() {
     try {
       const response = await fetch("/api/ai-chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: newMessages }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setMessages((currentMessages) => [
-          ...currentMessages,
-          {
-            role: "model",
-            content:
-              typeof data.error === "string"
-                ? data.error
-                : "Xin lỗi, hệ thống đang gặp lỗi khi xử lý tin nhắn. Bạn vui lòng thử lại sau.",
-          },
-        ]);
-
-        return;
+        throw new Error(data.error || "Lỗi phản hồi từ máy chủ.");
       }
 
-      const responseText =
-        typeof data.text === "string"
-          ? data.text
-          : "Xin lỗi, tôi chưa thể phản hồi lúc này.";
-
-      setMessages((currentMessages) => [
-        ...currentMessages,
+      setMessages((prev) => [
+        ...prev,
         {
           role: "model",
-          content: responseText,
+          content: data.text || "Xin lỗi, tôi chưa thể phản hồi lúc này.",
+          timestamp: formatTime(new Date()),
         },
       ]);
     } catch (error) {
       console.error("Failed to send chat message:", error);
-
-      setMessages((currentMessages) => [
-        ...currentMessages,
+      setMessages((prev) => [
+        ...prev,
         {
           role: "model",
-          content:
-            "Xin lỗi, hệ thống đang gặp lỗi khi xử lý tin nhắn. Bạn vui lòng thử lại sau.",
+          content: "Hệ thống AI đang bận hoặc mất kết nối. Vui lòng thử lại sau.",
+          timestamp: formatTime(new Date()),
         },
       ]);
     } finally {
@@ -176,189 +144,122 @@ export default function TuVanAiPage() {
   }
 
   return (
-    <main className="min-h-[calc(100vh-5rem)] overflow-hidden bg-[#0d1020] text-slate-100">
-      <div className="grid min-h-[calc(100vh-5rem)] grid-cols-1 lg:grid-cols-[6.25rem_minmax(0,1fr)]">
-        <aside className="hidden border-r border-white/10 bg-[#101423] lg:flex lg:flex-col">
-          <div className="flex h-20 items-center justify-center border-b border-white/10">
-            <CarMark />
-          </div>
+    <main className="flex min-h-screen items-center justify-center bg-[#0a0f1c] px-4 py-8 text-slate-200 selection:bg-cyan-500/30 sm:px-6">
+      {/* Khung Chat Chính */}
+      <div className="flex h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-[2.5rem] border border-slate-800/80 bg-[#111827]/80 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+        
+        {/* Khu vực hiển thị tin nhắn */}
+        <div className="flex-1 space-y-8 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-800">
+          {messages.map((message, index) => {
+            const isUser = message.role === "user";
 
-          <nav className="flex flex-1 flex-col items-center gap-2 pt-12">
-            {sidebarItems.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <button
-                  key={item.label}
-                  type="button"
-                  aria-label={item.label}
-                  className={`relative flex h-16 w-full items-center justify-center transition ${
-                    item.active
-                      ? "bg-cyan-400/20 text-cyan-200"
-                      : "text-slate-400 hover:bg-white/[0.04] hover:text-cyan-100"
-                  }`}
-                >
-                  {item.active ? (
-                    <span className="absolute right-0 h-full w-1 bg-cyan-300" />
-                  ) : null}
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </button>
-              );
-            })}
-          </nav>
-
-          <div className="flex h-20 items-center justify-center">
-            <button
-              type="button"
-              aria-label="Đăng xuất"
-              className="flex h-10 w-10 items-center justify-center text-slate-400 transition hover:text-cyan-100"
-            >
-              <LogOut className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
-        </aside>
-
-        <section className="flex min-w-0 flex-col">
-          <header className="flex min-h-20 items-center justify-between border-b border-white/10 px-5 sm:px-10">
-            <div className="flex items-center gap-4">
-              <div className="lg:hidden">
-                <CarMark />
-              </div>
-              <div>
-                <p className="text-xl font-medium tracking-tight text-cyan-200">
-                  Car AI
-                </p>
-              </div>
-            </div>
-
-            <nav className="hidden items-center gap-9 text-sm font-semibold tracking-wide text-slate-300 md:flex">
-              <span>Fleet</span>
-              <span>Analytics</span>
-              <span>Support</span>
-            </nav>
-
-            <div className="flex items-center gap-3 text-slate-300">
-              <button
-                type="button"
-                aria-label="Thông báo"
-                className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-white/[0.06] hover:text-cyan-100"
+            return (
+              <div
+                key={index}
+                className={`flex w-full items-end gap-3 ${
+                  isUser ? "justify-end" : "justify-start"
+                }`}
               >
-                <Bell className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                aria-label="Cài đặt"
-                className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-white/[0.06] hover:text-cyan-100"
-              >
-                <Settings className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-cyan-200/40 bg-slate-950 text-cyan-100">
-                <UserRound className="h-5 w-5" aria-hidden="true" />
-              </span>
-            </div>
-          </header>
+                {!isUser && <Avatar type="bot" />}
 
-          <div className="flex flex-1 justify-center px-4 py-7 sm:px-8 lg:px-12">
-            <div className="flex min-h-[calc(100vh-10rem)] w-full max-w-6xl flex-col rounded-[1.75rem] border border-white/10 bg-[#101423]/96 px-5 py-7 shadow-[0_30px_90px_rgba(0,0,0,0.35)] sm:px-8 lg:px-10">
-              <section className="min-h-0 flex-1 space-y-8 overflow-y-auto pr-1">
-                {messages.map((message, index) => {
-                  const isUser = message.role === "user";
-
-                  return (
-                    <div
-                      key={`${message.role}-${index}`}
-                      className={`flex items-start gap-5 ${
-                        isUser ? "justify-end" : "justify-start"
-                      }`}
-                    >
-                      {!isUser ? <Avatar type="bot" /> : null}
-
-                      <div
-                        className={`max-w-[78%] rounded-2xl border px-5 py-4 text-base leading-8 shadow-lg md:max-w-[72%] ${
-                          isUser
-                            ? "border-cyan-300/30 bg-cyan-400 text-slate-950 shadow-cyan-950/40"
-                            : "border-white/10 bg-[#202434] text-slate-100 shadow-black/20"
-                        }`}
-                      >
-                        {isUser ? (
-                          <p>{message.content}</p>
-                        ) : (
-                          <div className="max-w-none text-slate-100 [&_a]:text-cyan-200 [&_li]:my-1 [&_ol]:ml-5 [&_p]:my-0 [&_ul]:ml-5">
-                            <ReactMarkdown>{message.content}</ReactMarkdown>
-                          </div>
-                        )}
+                <div className={`flex max-w-[80%] flex-col gap-1 sm:max-w-[70%] ${isUser ? "items-end" : "items-start"}`}>
+                  <div
+                    className={`relative px-5 py-3.5 text-[15px] leading-relaxed tracking-wide shadow-sm ${
+                      isUser
+                        ? "rounded-2xl rounded-tr-sm bg-cyan-400 text-slate-900"
+                        : "rounded-2xl rounded-tl-sm bg-slate-800 text-slate-200"
+                    }`}
+                  >
+                    {isUser ? (
+                      <p>{message.content}</p>
+                    ) : (
+                      <div className="prose prose-invert prose-p:my-1 prose-a:text-cyan-300 max-w-none">
+                        <ReactMarkdown>{message.content}</ReactMarkdown>
                       </div>
-
-                      {isUser ? <Avatar type="user" /> : null}
-                    </div>
-                  );
-                })}
-
-                {isLoading ? (
-                  <div className="flex items-start gap-5">
-                    <Avatar type="bot" />
-                    <div className="inline-flex min-h-14 items-center gap-4 rounded-2xl border border-white/10 bg-[#202434] px-5 text-base italic text-slate-300 shadow-lg shadow-black/20">
-                      <span className="flex gap-1">
-                        <span className="h-2.5 w-2.5 rounded-full bg-cyan-200" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-cyan-200/80" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-cyan-200/60" />
-                      </span>
-                      AI đang phân tích...
-                    </div>
+                    )}
                   </div>
-                ) : null}
-
-                <div ref={messagesEndRef} />
-              </section>
-
-              <div className="pt-6">
-                <div className="mb-6 flex flex-wrap gap-3">
-                  {quickPrompts.map((prompt) => (
-                    <button
-                      key={prompt}
-                      type="button"
-                      onClick={() => void sendMessage(prompt)}
-                      disabled={isLoading}
-                      className="min-h-11 rounded-full border border-white/12 bg-white/[0.06] px-5 text-sm font-semibold text-slate-100 transition hover:border-cyan-200/60 hover:bg-cyan-300/10 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      {prompt}
-                    </button>
-                  ))}
+                  <span className="text-[11px] font-medium text-slate-500 px-1">
+                    {message.timestamp}
+                  </span>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex items-end gap-4">
-                  <label className="flex min-h-16 flex-1 items-center gap-4 rounded-2xl border border-white/12 bg-[#222636] px-5 text-slate-400 shadow-inner shadow-black/20 focus-within:border-cyan-200/60">
-                    <Paperclip className="h-5 w-5 shrink-0" aria-hidden="true" />
-                    <textarea
-                      value={input}
-                      onChange={(event) => setInput(event.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder="Nhập câu hỏi của bạn tại đây..."
-                      rows={1}
-                      className="max-h-28 min-h-8 flex-1 resize-none bg-transparent py-3 text-base text-slate-100 outline-none placeholder:text-slate-500 disabled:cursor-not-allowed"
-                      disabled={isLoading}
-                    />
-                    <Mic className="h-5 w-5 shrink-0" aria-hidden="true" />
-                  </label>
+                {isUser && <Avatar type="user" />}
+              </div>
+            );
+          })}
 
-                  <button
-                    type="submit"
-                    disabled={isLoading || !input.trim()}
-                    className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-cyan-300 text-slate-950 shadow-[0_18px_35px_rgba(103,232,249,0.25)] transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400 disabled:shadow-none"
-                    aria-label="Gửi tin nhắn"
-                  >
-                    <SendHorizontal className="h-7 w-7" aria-hidden="true" />
-                  </button>
-                </form>
-
-                <p className="mt-5 text-center text-xs text-slate-500">
-                  Car AI có thể đưa ra câu trả lời không chính xác. Hãy kiểm tra
-                  các thông tin quan trọng.
-                </p>
+          {/* Hiệu ứng AI đang trả lời */}
+          {isLoading && (
+            <div className="flex items-end gap-3">
+              <Avatar type="bot" />
+              <div className="rounded-2xl rounded-tl-sm bg-slate-800 px-5 py-4 shadow-sm">
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500"></span>
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500 delay-100"></span>
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500 delay-200"></span>
+                  <span className="ml-2 text-sm font-medium">AI đang phân tích...</span>
+                </div>
               </div>
             </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Khu vực Nhập liệu */}
+        <div className="mt-6 flex shrink-0 flex-col gap-4">
+          {/* Nút gợi ý nhanh */}
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {quickPrompts.map((prompt) => (
+               <button
+                 key={prompt}
+                 onClick={() => sendMessage(prompt)}
+                 disabled={isLoading}
+                 className="rounded-full border border-slate-700 bg-slate-800/50 px-5 py-2 text-sm font-medium text-slate-300 transition-all hover:border-cyan-500/50 hover:bg-slate-800 hover:text-cyan-300 disabled:opacity-50"
+               >
+                 {prompt}
+               </button>
+            ))}
           </div>
-        </section>
+
+          {/* Thanh Input */}
+          <form
+            onSubmit={handleSubmit}
+            className="relative flex items-end gap-3 rounded-3xl border border-slate-700 bg-[#1e293b]/50 p-2.5 shadow-inner backdrop-blur-sm transition-colors focus-within:border-cyan-500/50 focus-within:bg-[#1e293b]/80"
+          >
+            <button
+              type="button"
+              className="mb-1.5 ml-2 flex shrink-0 items-center justify-center text-slate-400 hover:text-cyan-400"
+            >
+              <Mic className="h-5 w-5" />
+            </button>
+
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Nhập nhu cầu của bạn..."
+              rows={1}
+              className="max-h-32 min-h-[44px] flex-1 resize-none bg-transparent py-3 text-[15px] text-slate-100 outline-none placeholder:text-slate-500 disabled:opacity-50 scrollbar-hide"
+              disabled={isLoading}
+            />
+
+            <button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-400 text-slate-900 shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-transform hover:scale-105 active:scale-95 disabled:scale-100 disabled:bg-slate-700 disabled:text-slate-500 disabled:shadow-none"
+            >
+              <SendHorizontal className="h-5 w-5 ml-0.5" />
+            </button>
+          </form>
+
+          {/* Footer Text */}
+          <div className="text-center">
+             <span className="text-[10px] font-semibold tracking-[0.2em] text-slate-600">
+               CAR AI ADVANCED ASSISTANT
+             </span>
+          </div>
+        </div>
+
       </div>
     </main>
   );

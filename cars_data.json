@@ -1,0 +1,322 @@
+[
+  {
+    "brandName": "Toyota",
+    "country": "Nhật Bản",
+    "modelName": "Veloz Cross",
+    "bodyType": "MPV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Toyota+Veloz+Cross",
+    "startingPrice": 698000000,
+    "specifications": [
+      {
+        "versionName": "Top",
+        "engine": "1.5L Xăng",
+        "seatingCapacity": 7,
+        "price": 698000000
+      }
+    ]
+  },
+  {
+    "brandName": "Toyota",
+    "country": "Nhật Bản",
+    "modelName": "Camry",
+    "bodyType": "Sedan",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Toyota+Camry",
+    "startingPrice": 1220000000,
+    "specifications": [
+      {
+        "versionName": "2.0Q",
+        "engine": "2.0L Xăng",
+        "seatingCapacity": 5,
+        "price": 1220000000
+      }
+    ]
+  },
+  {
+    "brandName": "Honda",
+    "country": "Nhật Bản",
+    "modelName": "CR-V",
+    "bodyType": "Crossover",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Honda+CR-V",
+    "startingPrice": 1259000000,
+    "specifications": [
+      {
+        "versionName": "e:HEV RS",
+        "engine": "2.0L Hybrid",
+        "seatingCapacity": 5,
+        "price": 1259000000
+      }
+    ]
+  },
+  {
+    "brandName": "Mitsubishi",
+    "country": "Nhật Bản",
+    "modelName": "Xforce",
+    "bodyType": "SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Mitsubishi+Xforce",
+    "startingPrice": 680000000,
+    "specifications": [
+      {
+        "versionName": "Premium",
+        "engine": "1.5L Xăng",
+        "seatingCapacity": 5,
+        "price": 680000000
+      }
+    ]
+  },
+  {
+    "brandName": "Hyundai",
+    "country": "Hàn Quốc",
+    "modelName": "Santa Fe",
+    "bodyType": "SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Hyundai+Santa+Fe",
+    "startingPrice": 1369000000,
+    "specifications": [
+      {
+        "versionName": "Calligraphy",
+        "engine": "2.5L Xăng",
+        "seatingCapacity": 7,
+        "price": 1369000000
+      }
+    ]
+  },
+  {
+    "brandName": "Hyundai",
+    "country": "Hàn Quốc",
+    "modelName": "Accent",
+    "bodyType": "Sedan",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Hyundai+Accent",
+    "startingPrice": 542000000,
+    "specifications": [
+      {
+        "versionName": "Đặc biệt",
+        "engine": "1.4L Xăng",
+        "seatingCapacity": 5,
+        "price": 542000000
+      }
+    ]
+  },
+  {
+    "brandName": "Kia",
+    "country": "Hàn Quốc",
+    "modelName": "Carnival",
+    "bodyType": "MPV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Kia+Carnival",
+    "startingPrice": 1439000000,
+    "specifications": [
+      {
+        "versionName": "Signature",
+        "engine": "2.2L Diesel",
+        "seatingCapacity": 7,
+        "price": 1439000000
+      }
+    ]
+  },
+  {
+    "brandName": "Kia",
+    "country": "Hàn Quốc",
+    "modelName": "Seltos",
+    "bodyType": "Crossover",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Kia+Seltos",
+    "startingPrice": 739000000,
+    "specifications": [
+      {
+        "versionName": "Premium",
+        "engine": "1.4L Turbo",
+        "seatingCapacity": 5,
+        "price": 739000000
+      }
+    ]
+  },
+  {
+    "brandName": "Ford",
+    "country": "Mỹ",
+    "modelName": "Everest",
+    "bodyType": "SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Ford+Everest",
+    "startingPrice": 1468000000,
+    "specifications": [
+      {
+        "versionName": "Titanium+",
+        "engine": "2.0L Bi-Turbo Diesel",
+        "seatingCapacity": 7,
+        "price": 1468000000
+      }
+    ]
+  },
+  {
+    "brandName": "Ford",
+    "country": "Mỹ",
+    "modelName": "Ranger",
+    "bodyType": "Bán tải",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Ford+Ranger",
+    "startingPrice": 979000000,
+    "specifications": [
+      {
+        "versionName": "Wildtrak",
+        "engine": "2.0L Bi-Turbo Diesel",
+        "seatingCapacity": 5,
+        "price": 979000000
+      }
+    ]
+  },
+  {
+    "brandName": "Ford",
+    "country": "Mỹ",
+    "modelName": "Territory",
+    "bodyType": "Crossover",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Ford+Territory",
+    "startingPrice": 899000000,
+    "specifications": [
+      {
+        "versionName": "Titanium",
+        "engine": "1.5L Ecoboost",
+        "seatingCapacity": 5,
+        "price": 899000000
+      }
+    ]
+  },
+  {
+    "brandName": "Mercedes-Benz",
+    "country": "Đức",
+    "modelName": "GLC 300",
+    "bodyType": "SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Mercedes+GLC+300",
+    "startingPrice": 2799000000,
+    "specifications": [
+      {
+        "versionName": "4MATIC",
+        "engine": "2.0L Mild-Hybrid",
+        "seatingCapacity": 5,
+        "price": 2799000000
+      }
+    ]
+  },
+  {
+    "brandName": "Mercedes-Benz",
+    "country": "Đức",
+    "modelName": "C 300",
+    "bodyType": "Sedan",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Mercedes+C+300",
+    "startingPrice": 2099000000,
+    "specifications": [
+      {
+        "versionName": "AMG",
+        "engine": "2.0L Mild-Hybrid",
+        "seatingCapacity": 5,
+        "price": 2099000000
+      }
+    ]
+  },
+  {
+    "brandName": "BMW",
+    "country": "Đức",
+    "modelName": "320i",
+    "bodyType": "Sedan",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=BMW+320i",
+    "startingPrice": 1499000000,
+    "specifications": [
+      {
+        "versionName": "Sport Line",
+        "engine": "2.0L TwinPower Turbo",
+        "seatingCapacity": 5,
+        "price": 1499000000
+      }
+    ]
+  },
+  {
+    "brandName": "Porsche",
+    "country": "Đức",
+    "modelName": "Macan",
+    "bodyType": "SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Porsche+Macan",
+    "startingPrice": 3817000000,
+    "specifications": [
+      {
+        "versionName": "S",
+        "engine": "2.9L V6 Twin-Turbo",
+        "seatingCapacity": 5,
+        "price": 3817000000
+      }
+    ]
+  },
+  {
+    "brandName": "VinFast",
+    "country": "Việt Nam",
+    "modelName": "VF 8",
+    "bodyType": "SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+8",
+    "startingPrice": 1090000000,
+    "specifications": [
+      {
+        "versionName": "Eco",
+        "engine": "Thuần điện (EV)",
+        "seatingCapacity": 5,
+        "price": 1090000000
+      }
+    ]
+  },
+  {
+    "brandName": "VinFast",
+    "country": "Việt Nam",
+    "modelName": "VF 9",
+    "bodyType": "SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+9",
+    "startingPrice": 1566000000,
+    "specifications": [
+      {
+        "versionName": "Plus",
+        "engine": "Thuần điện (EV)",
+        "seatingCapacity": 7,
+        "price": 1566000000
+      }
+    ]
+  },
+  {
+    "brandName": "VinFast",
+    "country": "Việt Nam",
+    "modelName": "VF 5",
+    "bodyType": "Crossover",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+5",
+    "startingPrice": 468000000,
+    "specifications": [
+      {
+        "versionName": "Plus",
+        "engine": "Thuần điện (EV)",
+        "seatingCapacity": 5,
+        "price": 468000000
+      }
+    ]
+  },
+  {
+    "brandName": "VinFast",
+    "country": "Việt Nam",
+    "modelName": "VF 3",
+    "bodyType": "Mini SUV",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+3",
+    "startingPrice": 240000000,
+    "specifications": [
+      {
+        "versionName": "Base",
+        "engine": "Thuần điện (EV)",
+        "seatingCapacity": 4,
+        "price": 240000000
+      }
+    ]
+  },
+  {
+    "brandName": "VinFast",
+    "country": "Việt Nam",
+    "modelName": "VF 7",
+    "bodyType": "Crossover",
+    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+7",
+    "startingPrice": 999000000,
+    "specifications": [
+      {
+        "versionName": "Plus",
+        "engine": "Thuần điện (EV)",
+        "seatingCapacity": 5,
+        "price": 999000000
+      }
+    ]
+  }
+]
