@@ -91,7 +91,7 @@ export default function CarCard({ car }: CarCardProps) {
         <div className="mt-7 grid grid-cols-2 gap-2">
           <Link
             href={detailHref}
-            className="inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-500 px-4 text-sm font-bold text-cyan-400 transition after:absolute after:inset-0 hover:bg-cyan-500 hover:text-slate-950"
+            className="relative inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-500 px-4 text-sm font-bold text-cyan-400 transition hover:bg-cyan-500 hover:text-slate-950"
           >
             Chi tiết
           </Link>

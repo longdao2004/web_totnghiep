@@ -234,6 +234,8 @@ export default function TuVanAiPage() {
             </button>
 
             <textarea
+              id="chat-input"
+              name="chat-input"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}

@@ -4,13 +4,24 @@
     "country": "Nhật Bản",
     "modelName": "Veloz Cross",
     "bodyType": "MPV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Toyota+Veloz+Cross",
+    "imageUrl": "/images/cars/veloz.jpg",
     "startingPrice": 698000000,
     "specifications": [
       {
         "versionName": "Top",
+        "modelYear": 2024,
         "engine": "1.5L Xăng",
+        "power": "107 hp",
+        "torque": "140 Nm",
+        "transmission": "Tự động 4 cấp",
+        "drivetrain": "FWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 7.2,
         "seatingCapacity": 7,
+        "dimensions": "4,475 x 1,730 x 1,680 mm",
+        "groundClearance": 195,
+        "safetyFeatures": "ABS, Airbag kép, Cân bằng điện tử",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 8 inch, Camera lùi",
         "price": 698000000
       }
     ]
@@ -20,13 +31,24 @@
     "country": "Nhật Bản",
     "modelName": "Camry",
     "bodyType": "Sedan",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Toyota+Camry",
+    "imageUrl": "/images/cars/camry.webp",
     "startingPrice": 1220000000,
     "specifications": [
       {
         "versionName": "2.0Q",
+        "modelYear": 2024,
         "engine": "2.0L Xăng",
+        "power": "171 hp",
+        "torque": "209 Nm",
+        "transmission": "Tự động 8 cấp",
+        "drivetrain": "FWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 6.8,
         "seatingCapacity": 5,
+        "dimensions": "4,885 x 1,840 x 1,465 mm",
+        "groundClearance": 145,
+        "safetyFeatures": "ABS, 10 Airbag, Kiểm soát ổn định điện tử",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 10 inch, Android Auto/Apple CarPlay",
         "price": 1220000000
       }
     ]
@@ -36,13 +58,24 @@
     "country": "Nhật Bản",
     "modelName": "CR-V",
     "bodyType": "Crossover",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Honda+CR-V",
+    "imageUrl": "/images/cars/CRV.jpg",
     "startingPrice": 1259000000,
     "specifications": [
       {
         "versionName": "e:HEV RS",
+        "modelYear": 2024,
         "engine": "2.0L Hybrid",
+        "power": "203 hp",
+        "torque": "225 Nm",
+        "transmission": "CVT Hybrid",
+        "drivetrain": "AWD",
+        "fuelType": "Hybrid",
+        "fuelConsumption": 5.2,
         "seatingCapacity": 5,
+        "dimensions": "4,694 x 1,855 x 1,679 mm",
+        "groundClearance": 210,
+        "safetyFeatures": "ABS, 6 Airbag, Honda Sensing",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 9 inch, Phanh tay điện tử",
         "price": 1259000000
       }
     ]
@@ -52,13 +85,24 @@
     "country": "Nhật Bản",
     "modelName": "Xforce",
     "bodyType": "SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Mitsubishi+Xforce",
+    "imageUrl": "/images/cars/xforce.jpg",
     "startingPrice": 680000000,
     "specifications": [
       {
         "versionName": "Premium",
+        "modelYear": 2024,
         "engine": "1.5L Xăng",
+        "power": "105 hp",
+        "torque": "141 Nm",
+        "transmission": "Tự động 4 cấp",
+        "drivetrain": "FWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 7.4,
         "seatingCapacity": 5,
+        "dimensions": "4,385 x 1,770 x 1,630 mm",
+        "groundClearance": 200,
+        "safetyFeatures": "ABS, 2 Airbag, Cân bằng điện tử",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 7 inch, Camera lùi",
         "price": 680000000
       }
     ]
@@ -68,13 +112,24 @@
     "country": "Hàn Quốc",
     "modelName": "Santa Fe",
     "bodyType": "SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Hyundai+Santa+Fe",
+    "imageUrl": "/images/cars/Santadfe.webp",
     "startingPrice": 1369000000,
     "specifications": [
       {
         "versionName": "Calligraphy",
+        "modelYear": 2024,
         "engine": "2.5L Xăng",
+        "power": "227 hp",
+        "torque": "304 Nm",
+        "transmission": "Tự động 8 cấp",
+        "drivetrain": "AWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 8.2,
         "seatingCapacity": 7,
+        "dimensions": "4,770 x 1,900 x 1,710 mm",
+        "groundClearance": 220,
+        "safetyFeatures": "ABS, 6 Airbag, Hỗ trợ phanh khẩn cấp",
+        "technologyFeatures": "Bluetooth, Panorama sunroof, Màn hình cảm ứng 12 inch",
         "price": 1369000000
       }
     ]
@@ -84,13 +139,24 @@
     "country": "Hàn Quốc",
     "modelName": "Accent",
     "bodyType": "Sedan",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Hyundai+Accent",
+    "imageUrl": "/images/cars/accent.webp",
     "startingPrice": 542000000,
     "specifications": [
       {
         "versionName": "Đặc biệt",
+        "modelYear": 2024,
         "engine": "1.4L Xăng",
+        "power": "103 hp",
+        "torque": "132 Nm",
+        "transmission": "Tự động 6 cấp",
+        "drivetrain": "FWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 6.5,
         "seatingCapacity": 5,
+        "dimensions": "4,405 x 1,735 x 1,475 mm",
+        "groundClearance": 160,
+        "safetyFeatures": "ABS, 4 Airbag, Kiểm soát ổn định",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 5 inch, USB",
         "price": 542000000
       }
     ]
@@ -100,13 +166,24 @@
     "country": "Hàn Quốc",
     "modelName": "Carnival",
     "bodyType": "MPV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Kia+Carnival",
+    "imageUrl": "/images/cars/carnival.webp",
     "startingPrice": 1439000000,
     "specifications": [
       {
         "versionName": "Signature",
+        "modelYear": 2024,
         "engine": "2.2L Diesel",
+        "power": "201 hp",
+        "torque": "441 Nm",
+        "transmission": "Tự động 8 cấp",
+        "drivetrain": "FWD",
+        "fuelType": "Diesel",
+        "fuelConsumption": 7.8,
         "seatingCapacity": 7,
+        "dimensions": "5,115 x 1,985 x 1,755 mm",
+        "groundClearance": 195,
+        "safetyFeatures": "ABS, 6 Airbag, Hệ thống an toàn nâng cao",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 12.3 inch, Hệ thống Harman Kardon",
         "price": 1439000000
       }
     ]
@@ -116,13 +193,24 @@
     "country": "Hàn Quốc",
     "modelName": "Seltos",
     "bodyType": "Crossover",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Kia+Seltos",
+    "imageUrl": "/images/cars/seltos.webp",
     "startingPrice": 739000000,
     "specifications": [
       {
         "versionName": "Premium",
+        "modelYear": 2024,
         "engine": "1.4L Turbo",
+        "power": "140 hp",
+        "torque": "242 Nm",
+        "transmission": "Tự động 6 cấp",
+        "drivetrain": "FWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 7.1,
         "seatingCapacity": 5,
+        "dimensions": "4,405 x 1,800 x 1,630 mm",
+        "groundClearance": 200,
+        "safetyFeatures": "ABS, 6 Airbag, Hỗ trợ phanh",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 8 inch, Apple CarPlay",
         "price": 739000000
       }
     ]
@@ -132,13 +220,24 @@
     "country": "Mỹ",
     "modelName": "Everest",
     "bodyType": "SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Ford+Everest",
+    "imageUrl": "/images/cars/everest.webp",
     "startingPrice": 1468000000,
     "specifications": [
       {
         "versionName": "Titanium+",
+        "modelYear": 2024,
         "engine": "2.0L Bi-Turbo Diesel",
+        "power": "210 hp",
+        "torque": "500 Nm",
+        "transmission": "Tự động 10 cấp",
+        "drivetrain": "AWD",
+        "fuelType": "Diesel",
+        "fuelConsumption": 8.5,
         "seatingCapacity": 7,
+        "dimensions": "4,923 x 1,860 x 1,851 mm",
+        "groundClearance": 225,
+        "safetyFeatures": "ABS, 8 Airbag, Cảnh báo va chạm",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 10 inch, Ghế nóng/làm mát",
         "price": 1468000000
       }
     ]
@@ -148,13 +247,24 @@
     "country": "Mỹ",
     "modelName": "Ranger",
     "bodyType": "Bán tải",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Ford+Ranger",
+    "imageUrl": "/images/cars/ranger.webp",
     "startingPrice": 979000000,
     "specifications": [
       {
         "versionName": "Wildtrak",
+        "modelYear": 2024,
         "engine": "2.0L Bi-Turbo Diesel",
+        "power": "170 hp",
+        "torque": "405 Nm",
+        "transmission": "Tự động 6 cấp",
+        "drivetrain": "4WD",
+        "fuelType": "Diesel",
+        "fuelConsumption": 8.9,
         "seatingCapacity": 5,
+        "dimensions": "5,367 x 1,860 x 1,835 mm",
+        "groundClearance": 258,
+        "safetyFeatures": "ABS, 6 Airbag, Hỗ trợ phanh",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 8 inch, Gầm cao",
         "price": 979000000
       }
     ]
@@ -164,13 +274,24 @@
     "country": "Mỹ",
     "modelName": "Territory",
     "bodyType": "Crossover",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Ford+Territory",
+    "imageUrl": "/images/cars/territoty.webp",
     "startingPrice": 899000000,
     "specifications": [
       {
         "versionName": "Titanium",
+        "modelYear": 2024,
         "engine": "1.5L Ecoboost",
+        "power": "181 hp",
+        "torque": "240 Nm",
+        "transmission": "Tự động 8 cấp",
+        "drivetrain": "FWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 7.2,
         "seatingCapacity": 5,
+        "dimensions": "4,630 x 1,878 x 1,680 mm",
+        "groundClearance": 205,
+        "safetyFeatures": "ABS, 8 Airbag, Kiểm soát ổn định",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 10 inch, Lái tự động đỗ",
         "price": 899000000
       }
     ]
@@ -180,13 +301,24 @@
     "country": "Đức",
     "modelName": "GLC 300",
     "bodyType": "SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Mercedes+GLC+300",
+    "imageUrl": "/images/cars/GLC.webp",
     "startingPrice": 2799000000,
     "specifications": [
       {
         "versionName": "4MATIC",
+        "modelYear": 2024,
         "engine": "2.0L Mild-Hybrid",
+        "power": "256 hp",
+        "torque": "370 Nm",
+        "transmission": "Tự động 9 cấp",
+        "drivetrain": "AWD",
+        "fuelType": "Hybrid",
+        "fuelConsumption": 6.5,
         "seatingCapacity": 5,
+        "dimensions": "4,638 x 1,890 x 1,639 mm",
+        "groundClearance": 210,
+        "safetyFeatures": "ABS, 9 Airbag, Tự động phanh khẩn cấp",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 11.9 inch, AIRMATIC",
         "price": 2799000000
       }
     ]
@@ -196,13 +328,24 @@
     "country": "Đức",
     "modelName": "C 300",
     "bodyType": "Sedan",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Mercedes+C+300",
+    "imageUrl": "/images/cars/C300.webp",
     "startingPrice": 2099000000,
     "specifications": [
       {
         "versionName": "AMG",
+        "modelYear": 2024,
         "engine": "2.0L Mild-Hybrid",
+        "power": "255 hp",
+        "torque": "370 Nm",
+        "transmission": "Tự động 9 cấp",
+        "drivetrain": "RWD",
+        "fuelType": "Hybrid",
+        "fuelConsumption": 6.2,
         "seatingCapacity": 5,
+        "dimensions": "4,751 x 1,820 x 1,438 mm",
+        "groundClearance": 135,
+        "safetyFeatures": "ABS, 9 Airbag, Cảnh báo va chạm",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 11.9 inch, AIRMATIC",
         "price": 2099000000
       }
     ]
@@ -212,13 +355,24 @@
     "country": "Đức",
     "modelName": "320i",
     "bodyType": "Sedan",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=BMW+320i",
+    "imageUrl": "/images/cars/320i.webp",
     "startingPrice": 1499000000,
     "specifications": [
       {
         "versionName": "Sport Line",
+        "modelYear": 2024,
         "engine": "2.0L TwinPower Turbo",
+        "power": "184 hp",
+        "torque": "300 Nm",
+        "transmission": "Tự động 8 cấp",
+        "drivetrain": "RWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 6.8,
         "seatingCapacity": 5,
+        "dimensions": "4,699 x 1,827 x 1,438 mm",
+        "groundClearance": 130,
+        "safetyFeatures": "ABS, 8 Airbag, Hỗ trợ phanh tránh va chạm",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 12 inch, Gương hiển thị head-up",
         "price": 1499000000
       }
     ]
@@ -228,13 +382,24 @@
     "country": "Đức",
     "modelName": "Macan",
     "bodyType": "SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=Porsche+Macan",
+    "imageUrl": "/images/cars/macan.webp",
     "startingPrice": 3817000000,
     "specifications": [
       {
         "versionName": "S",
+        "modelYear": 2024,
         "engine": "2.9L V6 Twin-Turbo",
+        "power": "380 hp",
+        "torque": "520 Nm",
+        "transmission": "Tự động 7 cấp",
+        "drivetrain": "AWD",
+        "fuelType": "Xăng",
+        "fuelConsumption": 9.5,
         "seatingCapacity": 5,
+        "dimensions": "4,699 x 1,923 x 1,599 mm",
+        "groundClearance": 210,
+        "safetyFeatures": "ABS, 8 Airbag, PSM",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 11.6 inch, Phanh hiệu suất cao",
         "price": 3817000000
       }
     ]
@@ -244,13 +409,24 @@
     "country": "Việt Nam",
     "modelName": "VF 8",
     "bodyType": "SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+8",
+    "imageUrl": "/images/cars/VF8.webp",
     "startingPrice": 1090000000,
     "specifications": [
       {
         "versionName": "Eco",
+        "modelYear": 2024,
         "engine": "Thuần điện (EV)",
+        "power": "211 hp",
+        "torque": "300 Nm",
+        "transmission": "Truyền động trực tiếp",
+        "drivetrain": "FWD",
+        "fuelType": "Điện",
+        "fuelConsumption": 0,
         "seatingCapacity": 5,
+        "dimensions": "4,503 x 1,859 x 1,661 mm",
+        "groundClearance": 200,
+        "safetyFeatures": "ABS, 6 Airbag, Cảnh báo va chạm",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 12 inch, Sạc nhanh 80kW",
         "price": 1090000000
       }
     ]
@@ -260,13 +436,24 @@
     "country": "Việt Nam",
     "modelName": "VF 9",
     "bodyType": "SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+9",
+    "imageUrl": "/images/cars/VF9.webp",
     "startingPrice": 1566000000,
     "specifications": [
       {
         "versionName": "Plus",
+        "modelYear": 2024,
         "engine": "Thuần điện (EV)",
+        "power": "402 hp",
+        "torque": "620 Nm",
+        "transmission": "Truyền động trực tiếp",
+        "drivetrain": "AWD",
+        "fuelType": "Điện",
+        "fuelConsumption": 0,
         "seatingCapacity": 7,
+        "dimensions": "4,986 x 1,980 x 1,722 mm",
+        "groundClearance": 200,
+        "safetyFeatures": "ABS, 8 Airbag, Tự động phanh khẩn cấp",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 14.6 inch, Lái tự động",
         "price": 1566000000
       }
     ]
@@ -276,13 +463,24 @@
     "country": "Việt Nam",
     "modelName": "VF 5",
     "bodyType": "Crossover",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+5",
+    "imageUrl": "/images/cars/VF5.webp",
     "startingPrice": 468000000,
     "specifications": [
       {
         "versionName": "Plus",
+        "modelYear": 2024,
         "engine": "Thuần điện (EV)",
+        "power": "163 hp",
+        "torque": "210 Nm",
+        "transmission": "Truyền động trực tiếp",
+        "drivetrain": "FWD",
+        "fuelType": "Điện",
+        "fuelConsumption": 0,
         "seatingCapacity": 5,
+        "dimensions": "4,012 x 1,650 x 1,547 mm",
+        "groundClearance": 190,
+        "safetyFeatures": "ABS, 4 Airbag, Cảnh báo va chạm",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 10 inch, Sạc nhanh",
         "price": 468000000
       }
     ]
@@ -292,13 +490,24 @@
     "country": "Việt Nam",
     "modelName": "VF 3",
     "bodyType": "Mini SUV",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+3",
+    "imageUrl": "/images/cars/VF3.webp",
     "startingPrice": 240000000,
     "specifications": [
       {
         "versionName": "Base",
+        "modelYear": 2024,
         "engine": "Thuần điện (EV)",
+        "power": "109 hp",
+        "torque": "143 Nm",
+        "transmission": "Truyền động trực tiếp",
+        "drivetrain": "FWD",
+        "fuelType": "Điện",
+        "fuelConsumption": 0,
         "seatingCapacity": 4,
+        "dimensions": "3,468 x 1,562 x 1,512 mm",
+        "groundClearance": 180,
+        "safetyFeatures": "ABS, 2 Airbag, Khóa trẻ em",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 8 inch, Sạc AC",
         "price": 240000000
       }
     ]
@@ -308,13 +517,24 @@
     "country": "Việt Nam",
     "modelName": "VF 7",
     "bodyType": "Crossover",
-    "imageUrl": "https://placehold.co/800x450/1e293b/38bdf8?text=VinFast+VF+7",
+    "imageUrl": "/images/cars/VF7.webp",
     "startingPrice": 999000000,
     "specifications": [
       {
         "versionName": "Plus",
+        "modelYear": 2024,
         "engine": "Thuần điện (EV)",
+        "power": "211 hp",
+        "torque": "300 Nm",
+        "transmission": "Truyền động trực tiếp",
+        "drivetrain": "FWD",
+        "fuelType": "Điện",
+        "fuelConsumption": 0,
         "seatingCapacity": 5,
+        "dimensions": "4,512 x 1,880 x 1,684 mm",
+        "groundClearance": 200,
+        "safetyFeatures": "ABS, 6 Airbag, Cảnh báo va chạm",
+        "technologyFeatures": "Bluetooth, Màn hình cảm ứng 12 inch, Sạc nhanh",
         "price": 999000000
       }
     ]

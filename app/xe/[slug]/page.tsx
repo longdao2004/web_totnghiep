@@ -101,8 +101,16 @@ export default async function XeDetailPage({ params }: CarDetailPageProps) {
   const specification = car.specifications[0];
   const startingPrice = car.startingPrice ?? specification?.price;
   const aiHref = `/tu-van-ai?model=${encodeURIComponent(car.name)}`;
+  
+  // Xử lý logic hiển thị các đơn vị đo lường
   const fuelConsumption = specification?.fuelConsumption
     ? `${specification.fuelConsumption} L/100km`
+    : undefined;
+  const seatingCapacity = specification?.seatingCapacity
+    ? `${specification.seatingCapacity} chỗ`
+    : undefined;
+  const groundClearance = specification?.groundClearance
+    ? `${specification.groundClearance} mm`
     : undefined;
 
   return (
@@ -175,18 +183,16 @@ export default async function XeDetailPage({ params }: CarDetailPageProps) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             <SpecCard label="Động cơ" value={specification?.engine} />
             <SpecCard label="Hộp số" value={specification?.transmission} />
-            <SpecCard label="Số chỗ ngồi" value={specification?.seatingCapacity} />
+            <SpecCard label="Số chỗ ngồi" value={seatingCapacity} />
             <SpecCard label="Kích thước" value={specification?.dimensions} />
-            <SpecCard
-              label="Mức tiêu hao nhiên liệu"
-              value={fuelConsumption}
-            />
+            <SpecCard label="Khoảng sáng gầm" value={groundClearance} />
             <SpecCard label="Hệ dẫn động" value={specification?.drivetrain} />
             <SpecCard label="Công suất" value={specification?.power} />
             <SpecCard label="Mô-men xoắn" value={specification?.torque} />
+            <SpecCard label="Mức tiêu hao nhiên liệu" value={fuelConsumption} />
           </div>
         </section>
       </div>
