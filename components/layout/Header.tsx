@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Menu, Moon, Search, Sun, X } from "lucide-react";
-import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 const navigationLinks = [
-  { href: "/", label: "Trang chủ", active: true },
+  { href: "/", label: "Trang chủ" },
   { href: "/danh-sach", label: "Danh sách xe" },
   { href: "/so-sanh", label: "So sánh" },
   { href: "/tu-van-ai", label: "Trợ lý AI" },
@@ -33,43 +33,18 @@ function CarMark() {
   );
 }
 
-function SearchField({ className = "" }: { className?: string }) {
-  return (
-    <label
-      className={`flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-600 shadow-inner shadow-slate-200/60 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400 dark:shadow-white/5 ${className}`}
-    >
-      <Search className="h-4 w-4 text-slate-500" aria-hidden="true" />
-      <input
-        type="search"
-        placeholder="Tìm mẫu xe..."
-        className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-500 dark:text-white"
-      />
-    </label>
-  );
-}
-
 export default function Header() {
-  const [isMounted, setIsMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const isDark = isMounted && resolvedTheme === "dark";
+  const pathname = usePathname();
 
   function closeMobileMenu() {
     setIsMobileMenuOpen(false);
   }
 
-  function toggleTheme() {
-    setTheme(isDark ? "light" : "dark");
-  }
-
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 text-slate-950 shadow-[0_1px_0_rgba(15,23,42,0.04)] backdrop-blur dark:border-white/10 dark:bg-[#0B0C10]/95 dark:text-white dark:shadow-[0_1px_0_rgba(255,255,255,0.04)]">
       <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        {/* Logo */}
         <Link
           href="/"
           className="flex shrink-0 items-center gap-3"
@@ -84,26 +59,29 @@ export default function Header() {
           </span>
         </Link>
 
+        {/* Menu Desktop */}
         <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300 lg:flex">
-          {navigationLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`relative py-7 transition hover:text-cyan-500 dark:hover:text-cyan-400 ${
-                link.active ? "text-cyan-500 dark:text-cyan-400" : ""
-              }`}
-            >
-              {link.label}
-              {link.active ? (
-                <span className="absolute inset-x-0 bottom-5 h-0.5 rounded-full bg-cyan-500 dark:bg-cyan-400" />
-              ) : null}
-            </Link>
-          ))}
+          {navigationLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                // Thêm class "group" vào thẻ Link để bắt sự kiện hover cho các thành phần con
+                className={`group relative py-7 transition hover:text-cyan-500 dark:hover:text-cyan-400 ${
+                  isActive ? "text-cyan-500 dark:text-cyan-400" : ""
+                }`}
+              >
+                {link.label}
+                {/* Animation gạch chân: Bắt đầu ở tỷ lệ 0 (scale-x-0), khi hover sẽ phóng to lên 100% (group-hover:scale-x-100) */}
+                <span className="absolute inset-x-0 bottom-5 h-0.5 origin-center scale-x-0 rounded-full bg-cyan-500 transition-transform duration-300 ease-out group-hover:scale-x-100 dark:bg-cyan-400" />
+              </Link>
+            );
+          })}
         </nav>
 
+        {/* Nút Đăng nhập / Đăng ký */}
         <div className="flex items-center justify-end gap-2 sm:gap-3">
-          <SearchField className="hidden w-44 xl:flex" />
-
           <Link
             href="/login"
             className="hidden rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-800 transition hover:border-cyan-500 hover:text-cyan-500 dark:border-white/25 dark:text-white dark:hover:border-cyan-400 dark:hover:text-cyan-400 md:inline-flex"
@@ -117,27 +95,7 @@ export default function Header() {
             Đăng ký
           </Link>
 
-          <button
-            type="button"
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            onClick={toggleTheme}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-cyan-500 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-cyan-400"
-          >
-            {isDark ? (
-              <Sun className="h-5 w-5" aria-hidden="true" />
-            ) : (
-              <Moon className="h-5 w-5" aria-hidden="true" />
-            )}
-          </button>
-
-          <Link
-            href="/profile"
-            aria-label="User profile"
-            className="hidden h-10 w-10 items-center justify-center rounded-full border border-cyan-400/40 bg-cyan-400/10 text-xs font-bold text-cyan-600 shadow-[0_0_20px_rgba(34,211,238,0.18)] dark:text-cyan-300 sm:inline-flex"
-          >
-            AI
-          </Link>
-
+          {/* Nút Hamburger cho Mobile */}
           <button
             type="button"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
@@ -154,25 +112,27 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Menu thả xuống cho Mobile */}
       {isMobileMenuOpen ? (
         <div className="border-t border-slate-200 bg-white px-4 py-5 shadow-lg shadow-slate-950/5 dark:border-white/10 dark:bg-[#0B0C10] dark:shadow-black/30 lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-5">
             <nav className="flex flex-col text-sm font-semibold text-slate-700 dark:text-slate-200">
-              {navigationLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={closeMobileMenu}
-                  className={`rounded-lg px-3 py-3 transition hover:bg-slate-100 hover:text-cyan-500 dark:hover:bg-white/10 dark:hover:text-cyan-400 ${
-                    link.active ? "text-cyan-500 dark:text-cyan-400" : ""
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navigationLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMobileMenu}
+                    className={`rounded-lg px-3 py-3 transition hover:bg-slate-100 hover:text-cyan-500 dark:hover:bg-white/10 dark:hover:text-cyan-400 ${
+                      isActive ? "text-cyan-500 dark:text-cyan-400" : ""
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
-
-            <SearchField />
 
             <div className="grid gap-3 sm:grid-cols-2">
               <Link

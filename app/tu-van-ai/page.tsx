@@ -1,18 +1,7 @@
 "use client";
 
-import {
-  FormEvent,
-  KeyboardEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import {
-  Bot,
-  Mic,
-  SendHorizontal,
-  UserRound,
-} from "lucide-react";
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { Bot, Mic, SendHorizontal, UserRound } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 type ChatMessage = {
@@ -25,7 +14,7 @@ const initialMessages: ChatMessage[] = [
   {
     role: "model",
     content:
-      "Xin chào! Tôi là Trợ lý AI của Car AI. Hãy cho tôi biết nhu cầu của bạn để tôi tư vấn chiếc xe phù hợp nhất.",
+      "Xin chào! Tôi là Trợ lý AI của **Car AI**. \n\nHãy cho tôi biết nhu cầu của bạn (ví dụ: *Tài chính, kiểu dáng xe, mục đích sử dụng...*) để tôi tư vấn chiếc xe phù hợp nhất nhé!",
     timestamp: new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
@@ -54,7 +43,7 @@ function Avatar({ type }: { type: "bot" | "user" }) {
     <div
       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border ${
         isBot
-          ? "border-cyan-500/30 bg-cyan-500/10 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+          ? "border-cyan-400/50 bg-gradient-to-br from-slate-800 to-slate-900 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.2)]"
           : "border-slate-600 bg-slate-800 text-slate-300 shadow-md"
       }`}
     >
@@ -122,7 +111,8 @@ export default function TuVanAiPage() {
         ...prev,
         {
           role: "model",
-          content: "Hệ thống AI đang bận hoặc mất kết nối. Vui lòng thử lại sau.",
+          content:
+            "Hệ thống AI đang bận hoặc mất kết nối. Vui lòng thử lại sau.",
           timestamp: formatTime(new Date()),
         },
       ]);
@@ -144,12 +134,23 @@ export default function TuVanAiPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#0a0f1c] px-4 py-8 text-slate-200 selection:bg-cyan-500/30 sm:px-6">
+    <main className="flex min-h-screen items-center justify-center bg-[#0B0C10] px-4 py-8 text-slate-200 selection:bg-cyan-500/30 sm:px-6">
       {/* Khung Chat Chính */}
-      <div className="flex h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-[2.5rem] border border-slate-800/80 bg-[#111827]/80 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+      <div className="flex h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#12141D]/90 p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
         
+        {/* Header khung chat */}
+        <div className="mb-6 flex items-center justify-between border-b border-white/5 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="relative flex h-3 w-3">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-cyan-500"></span>
+            </div>
+            <h1 className="text-lg font-bold tracking-wide text-white">Car AI Assistant</h1>
+          </div>
+        </div>
+
         {/* Khu vực hiển thị tin nhắn */}
-        <div className="flex-1 space-y-8 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-800">
+        <div className="flex-1 space-y-8 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-700/50">
           {messages.map((message, index) => {
             const isUser = message.role === "user";
 
@@ -162,23 +163,33 @@ export default function TuVanAiPage() {
               >
                 {!isUser && <Avatar type="bot" />}
 
-                <div className={`flex max-w-[80%] flex-col gap-1 sm:max-w-[70%] ${isUser ? "items-end" : "items-start"}`}>
+                <div
+                  className={`flex max-w-[85%] flex-col gap-1 sm:max-w-[75%] ${isUser ? "items-end" : "items-start"}`}
+                >
                   <div
-                    className={`relative px-5 py-3.5 text-[15px] leading-relaxed tracking-wide shadow-sm ${
+                    className={`relative px-6 py-4 text-[15px] leading-relaxed tracking-wide shadow-lg transition-all ${
                       isUser
-                        ? "rounded-2xl rounded-tr-sm bg-cyan-400 text-slate-900"
-                        : "rounded-2xl rounded-tl-sm bg-slate-800 text-slate-200"
+                        ? "rounded-3xl rounded-tr-sm bg-gradient-to-br from-cyan-400 to-cyan-500 text-slate-950 font-medium"
+                        : "rounded-3xl rounded-tl-sm border border-white/10 bg-[#1e293b]/60 text-slate-200 backdrop-blur-md"
                     }`}
                   >
                     {isUser ? (
                       <p>{message.content}</p>
                     ) : (
-                      <div className="prose prose-invert prose-p:my-1 prose-a:text-cyan-300 max-w-none">
+                      // Đã nâng cấp class Typography (Prose) tại đây
+                      <div className="prose prose-invert max-w-none 
+                        prose-p:leading-relaxed prose-p:my-2 
+                        prose-headings:text-cyan-400 prose-headings:font-bold prose-headings:mt-4 prose-headings:mb-2 
+                        prose-strong:text-white prose-strong:font-semibold 
+                        prose-ul:list-inside prose-ul:space-y-1 prose-li:marker:text-cyan-500
+                        prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline
+                        prose-img:mt-5 prose-img:mb-3 prose-img:w-full prose-img:max-h-72 prose-img:object-cover prose-img:rounded-2xl prose-img:border prose-img:border-white/10 prose-img:shadow-2xl"
+                      >
                         <ReactMarkdown>{message.content}</ReactMarkdown>
                       </div>
                     )}
                   </div>
-                  <span className="text-[11px] font-medium text-slate-500 px-1">
+                  <span className="text-[11px] font-medium text-slate-500 px-2 mt-1">
                     {message.timestamp}
                   </span>
                 </div>
@@ -192,12 +203,11 @@ export default function TuVanAiPage() {
           {isLoading && (
             <div className="flex items-end gap-3">
               <Avatar type="bot" />
-              <div className="rounded-2xl rounded-tl-sm bg-slate-800 px-5 py-4 shadow-sm">
-                <div className="flex items-center gap-2 text-slate-400">
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500"></span>
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500 delay-100"></span>
-                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500 delay-200"></span>
-                  <span className="ml-2 text-sm font-medium">AI đang phân tích...</span>
+              <div className="rounded-3xl rounded-tl-sm border border-white/5 bg-[#1e293b]/40 px-6 py-5 shadow-sm backdrop-blur-md">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-500"></span>
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-500 delay-100"></span>
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-500 delay-200"></span>
                 </div>
               </div>
             </div>
@@ -210,25 +220,25 @@ export default function TuVanAiPage() {
           {/* Nút gợi ý nhanh */}
           <div className="flex flex-wrap justify-center gap-2.5">
             {quickPrompts.map((prompt) => (
-               <button
-                 key={prompt}
-                 onClick={() => sendMessage(prompt)}
-                 disabled={isLoading}
-                 className="rounded-full border border-slate-700 bg-slate-800/50 px-5 py-2 text-sm font-medium text-slate-300 transition-all hover:border-cyan-500/50 hover:bg-slate-800 hover:text-cyan-300 disabled:opacity-50"
-               >
-                 {prompt}
-               </button>
+              <button
+                key={prompt}
+                onClick={() => sendMessage(prompt)}
+                disabled={isLoading}
+                className="rounded-full border border-slate-700 bg-slate-800/40 px-5 py-2.5 text-sm font-medium text-slate-300 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-cyan-500/50 hover:bg-slate-800 hover:text-cyan-300 hover:shadow-[0_4px_12px_rgba(34,211,238,0.1)] disabled:opacity-50 disabled:hover:-translate-y-0"
+              >
+                {prompt}
+              </button>
             ))}
           </div>
 
           {/* Thanh Input */}
           <form
             onSubmit={handleSubmit}
-            className="relative flex items-end gap-3 rounded-3xl border border-slate-700 bg-[#1e293b]/50 p-2.5 shadow-inner backdrop-blur-sm transition-colors focus-within:border-cyan-500/50 focus-within:bg-[#1e293b]/80"
+            className="relative flex items-end gap-3 rounded-3xl border border-slate-700 bg-[#1e293b]/40 p-2.5 shadow-inner backdrop-blur-md transition-all focus-within:border-cyan-500/50 focus-within:bg-[#1e293b]/80 focus-within:shadow-[0_0_20px_rgba(34,211,238,0.1)]"
           >
             <button
               type="button"
-              className="mb-1.5 ml-2 flex shrink-0 items-center justify-center text-slate-400 hover:text-cyan-400"
+              className="mb-2 ml-2 flex shrink-0 items-center justify-center text-slate-400 transition-colors hover:text-cyan-400"
             >
               <Mic className="h-5 w-5" />
             </button>
@@ -239,7 +249,7 @@ export default function TuVanAiPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Nhập nhu cầu của bạn..."
+              placeholder="Hỏi Car AI bất cứ điều gì..."
               rows={1}
               className="max-h-32 min-h-[44px] flex-1 resize-none bg-transparent py-3 text-[15px] text-slate-100 outline-none placeholder:text-slate-500 disabled:opacity-50 scrollbar-hide"
               disabled={isLoading}
@@ -248,7 +258,7 @@ export default function TuVanAiPage() {
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-400 text-slate-900 shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-transform hover:scale-105 active:scale-95 disabled:scale-100 disabled:bg-slate-700 disabled:text-slate-500 disabled:shadow-none"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-500 text-slate-900 shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] active:scale-95 disabled:scale-100 disabled:bg-slate-700 disabled:from-slate-700 disabled:to-slate-700 disabled:text-slate-500 disabled:shadow-none"
             >
               <SendHorizontal className="h-5 w-5 ml-0.5" />
             </button>
@@ -256,12 +266,11 @@ export default function TuVanAiPage() {
 
           {/* Footer Text */}
           <div className="text-center">
-             <span className="text-[10px] font-semibold tracking-[0.2em] text-slate-600">
-               CAR AI ADVANCED ASSISTANT
-             </span>
+            <span className="text-[10px] font-bold tracking-[0.25em] text-slate-600">
+              POWERED BY GROQ & LLAMA 3
+            </span>
           </div>
         </div>
-
       </div>
     </main>
   );
