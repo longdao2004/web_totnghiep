@@ -66,3 +66,20 @@ model CarSpecification {
   @@index([carModelId])
   @@map("car_specifications")
 }
+
+// Thêm 2 block này vào dưới cùng của file schema.prisma
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  password      String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
