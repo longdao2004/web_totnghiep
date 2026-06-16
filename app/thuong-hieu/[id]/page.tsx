@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import prisma from "@/lib/prisma";
+import FavoriteButton from "@/components/favoriteButton"; // Sửa lại chữ F viết hoa cho chuẩn
 
 type BrandPageProps = {
   params: Promise<{
@@ -77,6 +78,10 @@ export default async function BrandDetailPage({ params }: BrandPageProps) {
               >
                 {/* Khung chứa ảnh */}
                 <div className="relative h-56 w-full bg-slate-800">
+                  
+                  {/* NÚT THẢ TIM ĐÃ ĐƯỢC CHÈN VÀO ĐÂY */}
+                  <FavoriteButton carId={car.id} />
+
                   {car.imageUrl ? (
                     <img
                       src={car.imageUrl}

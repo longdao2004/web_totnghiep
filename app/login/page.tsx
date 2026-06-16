@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Mail, Lock, LogIn, ArrowRight, CheckCircle2 } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const searchParams = useSearchParams();
@@ -13,6 +15,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter(); // Hook để điều hướng sau khi đăng nhập thành công
 
   // Xóa thông báo lỗi khi người dùng bắt đầu gõ lại
   useEffect(() => {
@@ -24,14 +28,27 @@ export default function LoginPage() {
     setIsLoading(true);
     setError("");
 
-    // TODO: Chúng ta sẽ điền logic gọi NextAuth vào đây sau
-    console.log("Đang đăng nhập với:", email, password);
-    
-    // Tạm thời hiển thị loading 1 giây để test UI
-    setTimeout(() => {
+    try {
+      // Gọi hàm signIn của NextAuth
+      const res = await signIn("credentials", {
+        redirect: false, // Tắt tự động chuyển hướng để tự xử lý lỗi
+        email,
+        password,
+      });
+
+      if (res?.error) {
+        // Đăng nhập thất bại (Sai pass, sai email)
+        setError(res.error);
+        setIsLoading(false);
+      } else {
+        // Đăng nhập thành công -> Về trang chủ và refresh lại để load Header mới
+        router.push("/");
+        router.refresh();
+      }
+    } catch (error) {
+      setError("Hệ thống đang bận. Vui lòng thử lại sau.");
       setIsLoading(false);
-      setError("Chức năng đăng nhập đang được hoàn thiện. Vui lòng quay lại sau!");
-    }, 1000);
+    }
   }
 
   return (

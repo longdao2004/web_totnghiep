@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const inter = Inter({
   subsets: ["latin", "vietnamese"],
@@ -25,11 +26,13 @@ export default function RootLayout({
       <body
         className={`${inter.className} min-h-screen flex flex-col bg-white text-black dark:bg-[#0B0C10] dark:text-white`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

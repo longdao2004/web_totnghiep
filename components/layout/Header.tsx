@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut, User as UserIcon } from "lucide-react";
+import { useSession, signOut } from "next-auth/react"; // Khai báo NextAuth
 
 const navigationLinks = [
   { href: "/", label: "Trang chủ" },
@@ -36,6 +37,9 @@ function CarMark() {
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  
+  // Lấy trạng thái đăng nhập từ NextAuth
+  const { data: session, status } = useSession();
 
   function closeMobileMenu() {
     setIsMobileMenuOpen(false);
@@ -67,33 +71,59 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                // Thêm class "group" vào thẻ Link để bắt sự kiện hover cho các thành phần con
                 className={`group relative py-7 transition hover:text-cyan-500 dark:hover:text-cyan-400 ${
                   isActive ? "text-cyan-500 dark:text-cyan-400" : ""
                 }`}
               >
                 {link.label}
-                {/* Animation gạch chân: Bắt đầu ở tỷ lệ 0 (scale-x-0), khi hover sẽ phóng to lên 100% (group-hover:scale-x-100) */}
                 <span className="absolute inset-x-0 bottom-5 h-0.5 origin-center scale-x-0 rounded-full bg-cyan-500 transition-transform duration-300 ease-out group-hover:scale-x-100 dark:bg-cyan-400" />
               </Link>
             );
           })}
         </nav>
 
-        {/* Nút Đăng nhập / Đăng ký */}
+        {/* Nút Đăng nhập / Đăng ký & Thông tin User */}
         <div className="flex items-center justify-end gap-2 sm:gap-3">
-          <Link
-            href="/login"
-            className="hidden rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-800 transition hover:border-cyan-500 hover:text-cyan-500 dark:border-white/25 dark:text-white dark:hover:border-cyan-400 dark:hover:text-cyan-400 md:inline-flex"
-          >
-            Đăng nhập
-          </Link>
-          <Link
-            href="/register"
-            className="hidden rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 shadow-[0_0_24px_rgba(34,211,238,0.25)] transition hover:bg-cyan-300 md:inline-flex"
-          >
-            Đăng ký
-          </Link>
+          {status === "loading" ? (
+             <div className="hidden h-10 w-24 animate-pulse rounded-full bg-slate-200 dark:bg-slate-800 md:block"></div>
+          ) : session ? (
+             <div className="hidden items-center gap-4 md:flex">
+               {/* SỬA ĐỔI: Biến thẻ div thành Link dẫn đến trang Profile */}
+               <Link 
+                 href="/profile" 
+                 className="group flex items-center gap-2 text-sm font-medium text-slate-700 transition hover:text-cyan-500 dark:text-slate-300 dark:hover:text-cyan-400"
+               >
+                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-500 transition group-hover:bg-cyan-500/30 dark:text-cyan-400">
+                   <UserIcon className="h-4 w-4" />
+                 </div>
+                 <span>Chào, {session.user?.name || "Bạn"}</span>
+               </Link>
+               
+               {/* SỬA ĐỔI: Thêm callbackUrl khi đăng xuất */}
+               <button
+                 onClick={() => signOut({ callbackUrl: "/login?loggedout=true" })}
+                 className="flex items-center gap-2 rounded-full border border-red-500/50 px-4 py-2 text-sm font-medium text-red-500 transition hover:bg-red-500/10 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
+               >
+                 <LogOut className="h-4 w-4" />
+                 Đăng xuất
+               </button>
+             </div>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="hidden rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-800 transition hover:border-cyan-500 hover:text-cyan-500 dark:border-white/25 dark:text-white dark:hover:border-cyan-400 dark:hover:text-cyan-400 md:inline-flex"
+              >
+                Đăng nhập
+              </Link>
+              <Link
+                href="/register"
+                className="hidden rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 shadow-[0_0_24px_rgba(34,211,238,0.25)] transition hover:bg-cyan-300 md:inline-flex"
+              >
+                Đăng ký
+              </Link>
+            </>
+          )}
 
           {/* Nút Hamburger cho Mobile */}
           <button
@@ -135,20 +165,45 @@ export default function Header() {
             </nav>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <Link
-                href="/login"
-                onClick={closeMobileMenu}
-                className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-medium text-slate-800 transition hover:border-cyan-500 hover:text-cyan-500 dark:border-white/25 dark:text-white dark:hover:border-cyan-400 dark:hover:text-cyan-400"
-              >
-                Đăng nhập
-              </Link>
-              <Link
-                href="/register"
-                onClick={closeMobileMenu}
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 shadow-[0_0_24px_rgba(34,211,238,0.25)] transition hover:bg-cyan-300"
-              >
-                Đăng ký
-              </Link>
+              {session ? (
+                 <>
+                   {/* SỬA ĐỔI: Thêm nút xem Hồ sơ vào menu điện thoại */}
+                   <Link
+                     href="/profile"
+                     onClick={closeMobileMenu}
+                     className="col-span-2 flex items-center justify-center gap-2 rounded-lg px-3 py-3 transition hover:bg-slate-100 hover:text-cyan-500 dark:hover:bg-white/10 dark:hover:text-cyan-400"
+                   >
+                     <div className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-500 dark:text-cyan-400">
+                       <UserIcon className="h-3 w-3" />
+                     </div>
+                     <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Hồ sơ cá nhân</span>
+                   </Link>
+                   
+                   <button
+                     onClick={() => { closeMobileMenu(); signOut({ callbackUrl: "/login?loggedout=true" }); }}
+                     className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-full border border-red-500/50 text-sm font-medium text-red-500 transition hover:bg-red-500/10 dark:text-red-400"
+                   >
+                     Đăng xuất
+                   </button>
+                 </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={closeMobileMenu}
+                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-medium text-slate-800 transition hover:border-cyan-500 hover:text-cyan-500 dark:border-white/25 dark:text-white dark:hover:border-cyan-400 dark:hover:text-cyan-400"
+                  >
+                    Đăng nhập
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={closeMobileMenu}
+                    className="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 shadow-[0_0_24px_rgba(34,211,238,0.25)] transition hover:bg-cyan-300"
+                  >
+                    Đăng ký
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
