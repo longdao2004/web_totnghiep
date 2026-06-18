@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import prisma from "@/lib/prisma";
-import FavoriteButton from "@/components/favoriteButton"; // Sửa lại chữ F viết hoa cho chuẩn
+import FavoriteButton from "@/components/favoriteButton";
 
 type BrandPageProps = {
   params: Promise<{
